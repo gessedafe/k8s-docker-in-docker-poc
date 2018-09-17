@@ -1,0 +1,42 @@
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: filebeat
+  labels:
+    app: filebeat
+spec:
+  template:
+    metadata:
+      labels:
+        app: filebeat
+      name: filebeat
+    spec:
+      securityContext:
+        runAsUser: 0
+      containers:
+        - name: filebeat
+          image: elastic/filebeat:6.4.0
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+          env:
+            - name: user
+              value: root
+          volumeMounts:
+            - name: configDir
+              mountPath: /usr/share/filebeat
+            - name: auditLogsDir
+              mountPath: /var/log/kubernetes/audit
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      volumes:
+        - name: configDir
+          hostPath:
+            path: /usr/share/filebeat
+        - name: auditLogsDir
+          hostPath:
+            path: /var/log/kubernetes/audit
