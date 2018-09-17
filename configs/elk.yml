@@ -1,0 +1,44 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: elk-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elk
+    spec:
+      containers:
+      - name: elk
+        image: gessedafe/elk
+        ports:
+        - containerPort: 5601
+        - containerPort: 9600
+        - containerPort: 9200
+        - containerPort: 5044
+        env:
+        - name: MAX_MAP_COUNT
+          value: "262144"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: elk-service
+spec:
+  selector:
+    app: elk
+  ports:
+  - protocol: TCP
+    port: 5601
+    name: kibana-ui
+  - protocol: TCP
+    name: logstash-api
+    port: 9600
+  - protocol: TCP
+    name: elasticsearch-api
+    port: 9200
+  - protocol: TCP
+    name: logstash-listener
+    port: 5044
+  type: NodePort
