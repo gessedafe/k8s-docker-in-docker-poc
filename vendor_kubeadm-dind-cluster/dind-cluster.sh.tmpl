@@ -1144,8 +1144,6 @@ function dind::init {
       mgmt_cidr=${mgmt_net_cidrs[1]}
   fi
   local master_ip=$( dind::make-ip-from-cidr ${mgmt_cidr} 2 )
-  docker exec "$master_name" mkdir /etc/kubernetes
-  docker cp ./configs/audit-policy.yaml "$master_name":/etc/kubernetes/audit-policy.yaml
   docker exec -i "$master_name" bash <<EOF
 sed -e "s|{{API_VERSION}}|${api_version}|" \
     -e "s|{{ADV_ADDR}}|${master_ip}|" \

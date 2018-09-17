@@ -2,5 +2,7 @@ apiVersion: audit.k8s.io/v1beta1
 kind: Policy
 rules:
 - level: RequestResponse
+  omitStages:
+  - RequestReceived
   resources:
   - group: ""
