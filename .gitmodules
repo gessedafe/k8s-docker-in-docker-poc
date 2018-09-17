@@ -1,0 +1,5 @@
+[submodule "kubeadm-dind-cluster"]
+        path = vendor_kubeadm-dind-cluster
+        url = https://github.com/kubernetes-sigs/kubeadm-dind-cluster.git
+
+
