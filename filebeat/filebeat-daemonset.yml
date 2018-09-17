@@ -25,18 +25,20 @@ spec:
             - name: user
               value: root
           volumeMounts:
-            - name: configDir
-              mountPath: /usr/share/filebeat
-            - name: auditLogsDir
+            - name: configfile
+              mountPath: /usr/share/filebeat/filebeat.yml
+              subPath: filebeat.yml
+            - name: auditlogsdir
               mountPath: /var/log/kubernetes/audit
       terminationGracePeriodSeconds: 30
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
       volumes:
-        - name: configDir
-          hostPath:
-            path: /usr/share/filebeat
-        - name: auditLogsDir
+        - name: configfile
+          configMap:
+            defaultMode: 384
+            name: filebeat-config
+        - name: auditlogsdir
           hostPath:
             path: /var/log/kubernetes/audit
