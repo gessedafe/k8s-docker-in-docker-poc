@@ -5,6 +5,9 @@
 DIND_CLUSTER_MASTER_CONTAINER=`docker ps | grep master | awk '{print $1}'`
 
 
+#docker cp ./configs/audit-policy.yaml $DIND_CLUSTER_MASTER_CONTAINER:/etc/kubernetes/audit/audit.yaml
+
+
 # ======================================
 # Copies filebeat config to master
 # container
@@ -16,13 +19,13 @@ docker cp ./filebeat/filebeat.yml $DIND_CLUSTER_MASTER_CONTAINER:/usr/share/file
 # ======================================
 # Builds the ELK Docker custom image
 # ======================================
-docker build ./configs/elk-docker-image-no-ssl --tag gessedafe/elk:1.0.0.1
+docker build ./configs/elk-docker-image-no-ssl --tag gessedafe/elk:1.0.0.4
 
 
 # ======================================
 # Pushes the ELK image into Docker Hub
 # ======================================
-docker push gessedafe/elk:1.0.0.1
+docker push gessedafe/elk:1.0.0.4
 
 
 # ======================================
@@ -41,3 +44,6 @@ kubectl create configmap filebeat-config --from-file ./filebeat/filebeat.yml -o 
 # Deploys Filebeat
 # ======================================
 kubectl apply -f ./filebeat/filebeat-daemonset.yml
+
+
+

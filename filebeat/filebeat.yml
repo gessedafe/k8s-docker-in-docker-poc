@@ -9,6 +9,14 @@ filebeat:
     fields:
       log_type: k8s-audit-logs
       index: k8s-audit-logs
+    #processors:
+    #- add_kubernetes_metadata:
+    #    in_cluster: true
+    #    namespace: ${POD_NAMESPACE}
+    #    default_matchers.enabled: false
+    #    matchers:
+    #    - logs_path:
+    #        logs_path: /var/log/containers/
 
 output.logstash:
   hosts: ["elk-service:5044"]

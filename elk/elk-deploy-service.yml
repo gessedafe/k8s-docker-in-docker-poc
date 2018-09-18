@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: elk
-        image: gessedafe/elk:1.0.0.1
+        image: gessedafe/elk:1.0.0.4
         ports:
         - containerPort: 5601
         - containerPort: 9600
