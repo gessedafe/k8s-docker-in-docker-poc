@@ -14,7 +14,6 @@ cp ./vendor_kubeadm-dind-cluster/fixed/dind-cluster-v1.11.sh $DIND_CLUSTER_START
 sed -i  '' 's/{CoreDNS: false}/{CoreDNS: false, Auditing: true}/g' $DIND_CLUSTER_STARTUP_FILE
 
 
-
 # ======================================
 # Clones and changes the config file
 # file to setup audit policies
