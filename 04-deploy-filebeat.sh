@@ -17,24 +17,6 @@ docker cp ./filebeat/filebeat.yml $DIND_CLUSTER_MASTER_CONTAINER:/usr/share/file
 
 
 # ======================================
-# Builds the ELK Docker custom image
-# ======================================
-docker build ./configs/elk-docker-image-no-ssl --tag gessedafe/elk:1.0.0.4
-
-
-# ======================================
-# Pushes the ELK image into Docker Hub
-# ======================================
-docker push gessedafe/elk:1.0.0.4
-
-
-# ======================================
-# Deploys ELK
-# ======================================
-kubectl apply -f ./elk/elk-deploy-service.yml
-
-
-# ======================================
 # Creates a config map for filebeat
 # ======================================
 kubectl create configmap filebeat-config --from-file ./filebeat/filebeat.yml -o yaml --dry-run | kubectl apply -f -
