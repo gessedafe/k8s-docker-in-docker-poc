@@ -5,9 +5,6 @@
 DIND_CLUSTER_MASTER_CONTAINER=`docker ps | grep master | awk '{print $1}'`
 
 
-#docker cp ./configs/audit-policy.yaml $DIND_CLUSTER_MASTER_CONTAINER:/etc/kubernetes/audit/audit.yaml
-
-
 # ======================================
 # Copies filebeat config to master
 # container
