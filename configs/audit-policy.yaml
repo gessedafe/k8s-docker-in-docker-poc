@@ -1,8 +1,73 @@
+---
 apiVersion: audit.k8s.io/v1beta1
 kind: Policy
 rules:
-- level: RequestResponse
+
+#---------------------------------------
+- level: None
+  verbs:
+  - proxy
+  - watch
+
+#---------------------------------------
+- level: None
+  nonResourceURLs:
+  - '/healthz*'
+  - /version
+  - '/swagger*'
+
+#---------------------------------------
+- level: None
+  userGroups:
+  - 'system:nodes'
+
+#---------------------------------------
+- level: None
+  resources:
+  - group: ""
+    resources:
+    - events
+
+#---------------------------------------
+- level: None
+  users:
+  - 'system:apiserver'
+  - 'system:kube-controller-manager'
+  - 'system:kube-scheduler'
+  - 'system:serviceaccount:kube-system:cronjob-controller'
+  - 'system:serviceaccount:kube-system:daemon-set-controller'
+  - 'system:serviceaccount:kube-system:endpoint-controller'
+  - 'system:serviceaccount:kube-system:generic-garbage-collector'
+  - 'system:serviceaccount:kube-system:kube-dns'
+  - 'system:serviceaccount:kube-system:kube-proxy'
+  - 'system:serviceaccount:kube-system:namespace-controller'
+  - 'system:serviceaccount:kube-system:node-controller'
+  - 'system:serviceaccount:kube-system:pod-garbage-collector'
+  - 'system:serviceaccount:kube-system:resourcequota-controller'
+
+#---------------------------------------
+- level: Metadata
   omitStages:
   - RequestReceived
   resources:
   - group: ""
+    resources:
+    - secrets
+    - configmaps
+  - group: authentication.k8s.io
+    resources:
+    - tokenreviews
+
+#---------------------------------------
+- level: Metadata
+  omitStages:
+  - RequestReceived
+  verbs:
+  - get
+  - list
+
+#---------------------------------------
+- level: RequestResponse
+  omitStages:
+  - RequestReceived
+
